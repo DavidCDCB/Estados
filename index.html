@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+	<title>Messenger Client</title>
+
+	<!-- Icons Sources -->
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@700&display=swap" rel="stylesheet">
+	<!-- Bootswatch core CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/materia/bootstrap.min.css">
+
+	<!-- Custom styles -->
+	<link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+	<div id="app" class="container justify-content-center">
+		<div  class="d-flex justify-content-center font-weight-bold" for="nameUser">Gestion de Clientes</div>
+		<transition name="fade">
+			<div class="container">
+				<div class="col-12">
+					<div class="row">
+						<button @click="upData(7,'Alegre')" class="form-control btn btn-primary mt-2" id="btn1">😁 Alegre</button>
+					</div>
+					<div class="row">
+						<button @click="upData(6,'Excelente')" class="form-control btn btn-primary mt-2" id="btn2">😄 Excelente</button>
+					</div>
+					<div class="row">
+						<button @click="upData(5,'Bien')" class="form-control btn btn-primary mt-2" id="btn3">🙂 Bien</button>
+					</div>
+					<div class="row">
+						<button @click="upData(4,'Normal')" class="form-control btn btn-primary mt-2" id="btn4">😐 Normal</button>
+					</div>
+					<div class="row">
+						<button @click="upData(3,'Estresado')" class="form-control btn btn-primary mt-2" id="btn5">😣 Estresado</button>
+					</div>
+					<div class="row">
+						<button @click="upData(2,'Mal')" class="form-control btn btn-primary mt-2" id="btn6">😢 Mal</button>
+					</div>
+					<div class="row">
+						<button @click="upData(1,'Una mierda')" class="form-control btn btn-primary mt-2" id="btn7">😓 Una mierda</button>
+					</div>
+				</div>
+			</div>
+		</transition>
+
+	</div>
+
+	<!-- JQuery of Bootstrap -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript"
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+	<!-- Axios JS -->
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+	<!-- VUE JS 2-->
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<!-- Alerts-->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<!-- Personales -->
+	<script src="./main.js"></script>
+</body>
+
+</html>
