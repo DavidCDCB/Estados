@@ -97,7 +97,7 @@ var app = new Vue({
 					listColors.push(this.colores[iterator.Nivel]);
 					sumatoria += iterator.Nivel;
 
-					if(levels.length % 15 == 0){
+					if(levels.length % Math.round(this.data.length/24) == 0){
 						promedios.push((sumatoria/levels.length));
 						tagsProm.push(iterator.Fecha);
 						colorsProm.push(this.getColorProm(sumatoria/levels.length));
@@ -116,12 +116,23 @@ var app = new Vue({
 					}]
 				};
 				const config = {
-					type: 'bar',
+					type: 'line',
 					data: data,
 					options: {
 						responsive: true,
+						indexAxis: 'y',
 						layout: {
 							padding: 20
+						},
+						scales: {
+							x: {
+								max:7,
+							},
+							y: {
+								grid:{
+									display:false
+								}
+							}
 						}
 					}
 				};
@@ -160,7 +171,7 @@ var app = new Vue({
 						backgroundColor: '#063346',
 						borderColor: '#282c34',
 						borderWidth: 1,
-						pointRadius: 5,
+						pointRadius: 7,
 						data: promedios,
 						backgroundColor: colorsProm
 					}]
@@ -175,7 +186,10 @@ var app = new Vue({
 						scales: {
 							y: {
 								scaleOverride : true,
-								scaleStartValue : 0
+								scaleStartValue : 0,
+								grid:{
+									color:"#282c34"
+								}
 							}
 						}
 					},
