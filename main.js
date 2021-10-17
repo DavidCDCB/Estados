@@ -110,9 +110,10 @@ var app = new Vue({
 				const data = {
 					labels: labels,
 					datasets: [{
-						label: 'Estados de ánimo',
+						label: `${levels.length} Estados de ánimo`,
 						backgroundColor: listColors,
 						data: levels,
+						borderWidth: 1,
 					}]
 				};
 				const config = {
@@ -167,7 +168,7 @@ var app = new Vue({
 				const data3 = {
 					labels: tagsProm,
 					datasets: [{
-						label: 'Cambio en promedio',
+						label: `Cambio en promedio (${(sumatoria/levels.length).toFixed(2)} actual)`,
 						backgroundColor: '#063346',
 						borderColor: '#282c34',
 						borderWidth: 1,
