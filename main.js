@@ -77,6 +77,7 @@ var app = new Vue({
 			let sumatoria = 0;
 			let tagsProm = [];
 			let colorsProm = [];
+			let grupo = 0;
 			let conteos = {
 				"Alegre":0,
 				"Excelente":0,
@@ -86,10 +87,15 @@ var app = new Vue({
 				"Mal":0,
 				"Una Mierda":0
 			};
-
+			let actual = 0;
+			let cambios = {
+				"aumentos":0,
+				"decrementos":0
+			};
 
 			this.downData().then(r => {
 				this.data = Object.values(r.data);
+				grupo = Math.round(this.data.length/50);
 				for (const iterator of this.data) {
 					labels.push(iterator.Fecha);
 					levels.push(iterator.Nivel);
@@ -97,15 +103,23 @@ var app = new Vue({
 					listColors.push(this.colores[iterator.Nivel]);
 					sumatoria += iterator.Nivel;
 
-					if(levels.length % Math.round(this.data.length/24) == 0){
+					if(levels.length % grupo == 0){
 						promedios.push((sumatoria/levels.length));
 						tagsProm.push(iterator.Fecha);
 						colorsProm.push(this.getColorProm(sumatoria/levels.length));
 					}
 					
+					
 				}
 
-				console.log(promedios);
+				for (const iterator of promedios) {
+					if(iterator > actual){
+						cambios["aumentos"]++;
+					}else{
+						cambios["decrementos"]++;
+					}
+					actual = iterator;
+				}
 
 				const data = {
 					labels: labels,
@@ -121,14 +135,11 @@ var app = new Vue({
 					data: data,
 					options: {
 						responsive: true,
-						indexAxis: 'y',
+						indexAxis: 'x',
 						layout: {
 							padding: 20
 						},
 						scales: {
-							x: {
-								max:7,
-							},
 							y: {
 								grid:{
 									display:false
@@ -155,8 +166,9 @@ var app = new Vue({
 					type: 'pie',
 					data: data2,
 					options: {
-						layout: {
-							padding: 100
+						padding:{
+							left: 100,
+							right: 100
 						}
 					},
 				};
@@ -168,7 +180,7 @@ var app = new Vue({
 				const data3 = {
 					labels: tagsProm,
 					datasets: [{
-						label: `Cambio en promedio (${(sumatoria/levels.length).toFixed(2)} actual)`,
+						label: `Promedios por cada ${grupo} registros (${(sumatoria/levels.length).toFixed(2)} actual)`,
 						backgroundColor: '#063346',
 						borderColor: '#282c34',
 						borderWidth: 1,
@@ -178,16 +190,21 @@ var app = new Vue({
 					}]
 				};
 				const config3 = {
-					type: 'line',
+					type: 'bar',
 					data: data3,
 					options:  {
 						layout: {
-							padding: 20
+							padding:{
+								left: 100,
+								right: 100
+							}
 						},
 						scales: {
 							y: {
+								max: 7,
+								min: 1,
 								scaleOverride : true,
-								scaleStartValue : 0,
+								scaleStartValue : 1,
 								grid:{
 									color:"#282c34"
 								}
@@ -195,10 +212,35 @@ var app = new Vue({
 						}
 					},
 				};
-
 				var myChart3 = new Chart(
 					document.getElementById('promedios'),
 					config3
+				);
+
+				const labels3 = ["Incrementos","Decrementos"];
+				const data4 = {
+					labels: labels3,
+					datasets: [{
+						label: 'Conteo por estado',
+						data: Object.values(cambios),
+						backgroundColor: ["#a5d788","#09050f"]
+					}]
+				};
+				const config4 = {
+					type: 'doughnut',
+					data: data4,
+					options: {
+						layout: {
+							padding:{
+								left: 100,
+								right: 100
+							}
+						}
+					},
+				};
+				var myChart4 = new Chart(
+					document.getElementById('cambios'),
+					config4
 				);
 			});
 		}
