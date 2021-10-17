@@ -3,6 +3,10 @@ body{
 	color: white;
 }
 
+.grafico{
+	background-color: white;
+}
+
 .contenido{
 	height: 30em;
 	overflow-y: auto;
