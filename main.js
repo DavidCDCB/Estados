@@ -15,7 +15,7 @@ var app = new Vue({
 			this.estado = {
 				"Estado": name,
 				"Nivel": level,
-				"Fecha": new Date().toDateString()
+				"Fecha": new Date().toLocaleDateString('es-co', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) 
 			}
 			if (this.estado != null) {
 				axios.post('https://bdethos-default-rtdb.firebaseio.com/status.json',
