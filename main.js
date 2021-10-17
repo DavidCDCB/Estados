@@ -44,7 +44,7 @@ var app = new Vue({
 				"Excelente":0,
 				"Bien":0,
 				"Normal":0,
-				"Estresado":0,
+				"Ansioso":0,
 				"Mal":0,
 				"Una Mierda":0
 			};
@@ -100,7 +100,7 @@ var app = new Vue({
 					}]
 				};
 				const config2 = {
-					type: 'bar',
+					type: 'pie',
 					data: data2,
 					options: {
 						scales: {

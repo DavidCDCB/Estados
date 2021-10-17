@@ -5,6 +5,11 @@ body{
 
 .grafico{
 	background-color: white;
+	
+}
+
+#btnReporte.btn-primary{
+	font-size: 1em !important;
 }
 
 .contenido{
