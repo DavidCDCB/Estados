@@ -6,17 +6,26 @@ var app = new Vue({
 	data: {
 		data: [],
 		estado: {},
+		raw: "Fecha,Valor\n",
+		rawProm: "Fecha,Valor\n",
 		colores: {
-			7:'#A5D788',
-			6:'#38A8A1',
-			5:'#3777A4',
-			4:'#4537A4',
-			3:'#541C38',
-			2:'#260D1E',
-			1:'#09050F'
+			7: '#A5D788',
+			6: '#38A8A1',
+			5: '#3777A4',
+			4: '#4537A4',
+			3: '#541C38',
+			2: '#260D1E',
+			1: '#09050F'
 		}
 	},
 	methods: {
+		downloadData(filename, textInput){
+			var element = document.createElement('a');
+			element.setAttribute('href','data:text/csv;charset=utf-8, ' + encodeURIComponent(textInput));
+			element.setAttribute('download', filename);
+			document.body.appendChild(element);
+			element.click();
+		},
 		async downData() {
 			return await axios.get('https://bdethos-default-rtdb.firebaseio.com/status.json');
 		},
@@ -24,7 +33,7 @@ var app = new Vue({
 			this.estado = {
 				"Estado": name,
 				"Nivel": level,
-				"Fecha": new Date().toLocaleDateString('es-co', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) 
+				"Fecha": new Date().toLocaleDateString('es-co', { weekday: "long", year: "numeric", month: "short", day: "numeric" })
 			}
 			if (this.estado != null) {
 				axios.post('https://bdethos-default-rtdb.firebaseio.com/status.json',
@@ -45,26 +54,26 @@ var app = new Vue({
 				});
 			}
 		},
-		getColorProm(value){
-			if(value > 7){
+		getColorProm(value) {
+			if (value > 7) {
 				return this.colores[7];
 			}
-			if(value > 6){
+			if (value > 6) {
 				return this.colores[6];
 			}
-			if(value > 5){
+			if (value > 5) {
 				return this.colores[5];
 			}
-			if(value > 4){
+			if (value > 4) {
 				return this.colores[4];
 			}
-			if(value > 3){
+			if (value > 3) {
 				return this.colores[3];
 			}
-			if(value > 2){
+			if (value > 2) {
 				return this.colores[2];
 			}
-			if(value > 1){
+			if (value > 1) {
 				return this.colores[1];
 			}
 		},
@@ -78,24 +87,24 @@ var app = new Vue({
 			let tagsProm = [];
 			let colorsProm = [];
 			let grupo = 0;
-			let conteos = {
-				"Alegre":0,
-				"Excelente":0,
-				"Bien":0,
-				"Normal":0,
-				"Ansioso":0,
-				"Mal":0,
-				"Una Mierda":0
-			};
 			let actual = 0;
+			let conteos = {
+				"Alegre": 0,
+				"Excelente": 0,
+				"Bien": 0,
+				"Normal": 0,
+				"Ansioso": 0,
+				"Mal": 0,
+				"Una Mierda": 0
+			};
 			let cambios = {
-				"aumentos":0,
-				"decrementos":0
+				"aumentos": 0,
+				"decrementos": 0
 			};
 
 			this.downData().then(r => {
 				this.data = Object.values(r.data);
-				grupo = Math.round(this.data.length/50);
+				grupo = Math.round(this.data.length / 48);
 				for (const iterator of this.data) {
 					labels.push(iterator.Fecha);
 					levels.push(iterator.Nivel);
@@ -103,20 +112,20 @@ var app = new Vue({
 					listColors.push(this.colores[iterator.Nivel]);
 					sumatoria += iterator.Nivel;
 
-					if(levels.length % grupo == 0){
-						promedios.push((sumatoria/levels.length));
+					if (levels.length % grupo == 0) {
+						promedios.push((sumatoria / levels.length));
 						tagsProm.push(iterator.Fecha);
-						colorsProm.push(this.getColorProm(sumatoria/levels.length));
+						colorsProm.push(this.getColorProm(sumatoria / levels.length));
+						this.rawProm += iterator.Fecha.split(",")[1]+","+(sumatoria / levels.length)+"\n";
 					}
-					
-					
+					this.raw += iterator.Fecha.split(",")[1]+","+iterator.Nivel+"\n";
 				}
-
+				actual = promedios[0];
 				for (const iterator of promedios) {
-					if(iterator > actual){
-						cambios["aumentos"]++;
-					}else{
-						cambios["decrementos"]++;
+					if (iterator > actual) {
+						cambios["aumentos"] += iterator - actual;
+					} else if (iterator < actual) {
+						cambios["decrementos"] += actual - iterator;
 					}
 					actual = iterator;
 				}
@@ -141,8 +150,8 @@ var app = new Vue({
 						},
 						scales: {
 							y: {
-								grid:{
-									display:false
+								grid: {
+									display: false
 								}
 							}
 						}
@@ -166,7 +175,7 @@ var app = new Vue({
 					type: 'pie',
 					data: data2,
 					options: {
-						padding:{
+						padding: {
 							left: 100,
 							right: 100
 						}
@@ -180,21 +189,21 @@ var app = new Vue({
 				const data3 = {
 					labels: tagsProm,
 					datasets: [{
-						label: `Promedios por cada ${grupo} registros (${(sumatoria/levels.length).toFixed(2)} actual)`,
-						backgroundColor: '#063346',
-						borderColor: '#282c34',
-						borderWidth: 1,
-						pointRadius: 7,
+						label: `Promedios por cada ${grupo} registros (${(sumatoria / levels.length).toFixed(2)} actual)`,
+						backgroundColor: 'rgba(6,51,70,0.2)',
+						borderColor: '#063346',
+						fill: true,
+						borderWidth: 3,
+						pointRadius: 1,
 						data: promedios,
-						backgroundColor: colorsProm
 					}]
 				};
 				const config3 = {
-					type: 'bar',
+					type: 'line',
 					data: data3,
-					options:  {
+					options: {
 						layout: {
-							padding:{
+							padding: {
 								left: 100,
 								right: 100
 							}
@@ -203,10 +212,10 @@ var app = new Vue({
 							y: {
 								max: 7,
 								min: 1,
-								scaleOverride : true,
-								scaleStartValue : 1,
-								grid:{
-									color:"#282c34"
+								scaleOverride: true,
+								scaleStartValue: 1,
+								grid: {
+									color: "#282c34"
 								}
 							}
 						}
@@ -217,13 +226,13 @@ var app = new Vue({
 					config3
 				);
 
-				const labels3 = ["Incrementos","Decrementos"];
+				const labels3 = ["Incremento", "Decremento"];
 				const data4 = {
 					labels: labels3,
 					datasets: [{
 						label: 'Conteo por estado',
 						data: Object.values(cambios),
-						backgroundColor: ["#a5d788","#09050f"]
+						backgroundColor: ["#a5d788", "#09050f"]
 					}]
 				};
 				const config4 = {
@@ -231,7 +240,7 @@ var app = new Vue({
 					data: data4,
 					options: {
 						layout: {
-							padding:{
+							padding: {
 								left: 100,
 								right: 100
 							}

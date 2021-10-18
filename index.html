@@ -24,34 +24,31 @@
 <body>
 	<div id="app" class="container justify-content-center">
 		<div  class="d-flex justify-content-center font-weight-bold" for="nameUser">Estados de Ánimo</div>
-		<transition name="fade">
-			<div class="container">
-				<div class="col-12">
-					<div class="row">
-						<button @click="upData(7,'Alegre')" class="form-control btn btn-primary mt-2" id="btn1">😌 Alegre</button>
-					</div>
-					<div class="row">
-						<button @click="upData(6,'Excelente')" class="form-control btn btn-primary mt-2" id="btn2">😄 Excelente</button>
-					</div>
-					<div class="row">
-						<button @click="upData(5,'Bien')" class="form-control btn btn-primary mt-2" id="btn3">🙂 Bien</button>
-					</div>
-					<div class="row">
-						<button @click="upData(4,'Normal')" class="form-control btn btn-primary mt-2" id="btn4">😐 Normal</button>
-					</div>
-					<div class="row">
-						<button @click="upData(3,'Ansioso')" class="form-control btn btn-primary mt-2" id="btn5">😣 Ansioso</button>
-					</div>
-					<div class="row">
-						<button @click="upData(2,'Mal')" class="form-control btn btn-primary mt-2" id="btn6">😢 Mal</button>
-					</div>
-					<div class="row">
-						<button @click="upData(1,'Una mierda')" class="form-control btn btn-primary mt-2" id="btn7">😓 Una mierda</button>
-					</div>
+		<div class="container">
+			<div class="col-12">
+				<div class="row">
+					<button @click="upData(7,'Alegre')" class="form-control btn btn-primary mt-2" id="btn1"><i class="fas fa-smile-beam"></i> Alegre</button>
+				</div>
+				<div class="row">
+					<button @click="upData(6,'Excelente')" class="form-control btn btn-primary mt-2" id="btn2"><i class="fas fa-grin-alt"></i> Excelente</button>
+				</div>
+				<div class="row">
+					<button @click="upData(5,'Bien')" class="form-control btn btn-primary mt-2" id="btn3"><i class="fas fa-smile"></i> Bien</button>
+				</div>
+				<div class="row">
+					<button @click="upData(4,'Normal')" class="form-control btn btn-primary mt-2" id="btn4"><i class="fas fa-meh-blank"></i> Normal</button>
+				</div>
+				<div class="row">
+					<button @click="upData(3,'Ansioso')" class="form-control btn btn-primary mt-2" id="btn5"><i class="fas fa-frown-open"></i> Ansioso</button>
+				</div>
+				<div class="row">
+					<button @click="upData(2,'Mal')" class="form-control btn btn-primary mt-2" id="btn6"><i class="fas fa-frown"></i> Mal</button>
+				</div>
+				<div class="row">
+					<button @click="upData(1,'Una mierda')" class="form-control btn btn-primary mt-2" id="btn7"><i class="fas fa-sad-tear"></i> Una mierda</button>
 				</div>
 			</div>
-		</transition>
-
+		</div>
 	</div>
 
 	<!-- JQuery of Bootstrap -->
