@@ -17,6 +17,10 @@ body{
 	overflow-y: auto;
 }
 
+.btn-success{
+	font-size: 1rem ;
+}
+
 .btn-primary{
 	font-size: 2rem ;
 }
@@ -41,6 +45,12 @@ body{
 }
 #btn7.btn-primary{
 	background: #09050F;
+}
+
+#userText{
+	font-size: 2em;
+	background-color: white;
+	padding: 1em;
 }
 
 /*EFECTOS DE ANIMACION*/

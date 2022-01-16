@@ -16,9 +16,28 @@ var app = new Vue({
 			3: '#541C38',
 			2: '#260D1E',
 			1: '#09050F'
-		}
+		},
+		texto: '',
+		enviando: false
 	},
 	methods: {
+		async requestGPTJ() {
+			console.log(this.texto);
+			this.enviando = !this.enviando;
+			await axios.post('https://protoapiflask.herokuapp.com/gptj',
+			{
+				"texto": this.texto
+			},{
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(response => {
+				console.log(response.data);
+				this.texto += " "+response.data.text;
+				this.enviando = !this.enviando;
+			});
+		},
+
 		downloadData(filename, textInput){
 			var element = document.createElement('a');
 			element.setAttribute('href','data:text/csv;charset=utf-8, ' + encodeURIComponent(textInput));
